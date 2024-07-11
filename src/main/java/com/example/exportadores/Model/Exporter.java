@@ -14,6 +14,7 @@ public class Exporter {
     @Embedded
     private Company company;
 
+    @Version
     @Column(name = "version", nullable = false)
     private Long version;
 
@@ -39,14 +40,16 @@ public class Exporter {
     private String sector;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false, length = 35)
-    private String id;
+    private int id;
 
-    public String getId() {
+    // Getters and setters
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

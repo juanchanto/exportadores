@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/exporters")
@@ -57,6 +59,22 @@ public class ExporterController {
                     return ResponseEntity.ok().body(updatedExporter);
                 }).orElse(ResponseEntity.notFound().build());
     }
+
+    @PutMapping("/updateStatus/{id}")
+    public ResponseEntity<?> updateExporterStatus(@PathVariable String id, @RequestBody Map<String, String> statusMap) {
+        String newStatus = statusMap.get("status");
+        Optional<Exporter> optionalExporter = exporterRepository.findById(id);
+        if (!optionalExporter.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Exporter exporter = optionalExporter.get();
+        exporter.setStatus(newStatus);
+        exporterRepository.save(exporter);
+
+        return ResponseEntity.ok().build();
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteExporter(@PathVariable String id) {

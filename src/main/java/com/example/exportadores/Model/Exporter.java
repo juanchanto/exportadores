@@ -3,7 +3,6 @@ package com.example.exportadores.Model;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
-
 @Entity
 @Table(name = "exporter")
 public class Exporter {
@@ -45,6 +44,7 @@ public class Exporter {
     private int id;
 
     // Getters and setters
+    //De igual manera, se puede reemplazar con el uso de la anotación de @Data del paquete lombok, en este caso no se utilizó
     public int getId() {
         return id;
     }
@@ -53,7 +53,6 @@ public class Exporter {
         this.id = id;
     }
 
-    // Getters and setters
     public String getStatus() {
         return status;
     }
@@ -133,7 +132,7 @@ public class Exporter {
     public void setSector(String sector) {
         this.sector = sector;
     }
-
+    //Estructura de clase anidada para los datos de company
     @Embeddable
     public static class Company {
         @Column(name = "identificationType", length = 1, nullable = false)

@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class SecurityConfig implements WebMvcConfigurer {
-
+    //Configuración de protección contra ataques XSS
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // Utiliza el comodín /** para aplicar la configuración a todas las rutas

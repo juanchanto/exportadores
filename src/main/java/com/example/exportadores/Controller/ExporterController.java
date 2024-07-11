@@ -17,23 +17,22 @@ public class ExporterController {
 
     @Autowired
     private ExporterRepository exporterRepository;
-
+    //API para búsqueda completa de exportadores
     @GetMapping
     public List<Exporter> getAllExporters() {
         return exporterRepository.findAll();
     }
-
+    //API para búsqueda de exportadores por Id
     @GetMapping("/{id}")
     public ResponseEntity<Exporter> getExporterById(@PathVariable String id) {
         return exporterRepository.findById(id)
                 .map(exporter -> ResponseEntity.ok().body(exporter))
                 .orElse(ResponseEntity.notFound().build());
     }
-
+    //API para crear exportadores
     @PostMapping
     public ResponseEntity<Exporter> createExporter(@RequestBody Exporter exporter) {
         try {
-            // Aquí puedes validar y ajustar los datos según tus necesidades
             Exporter createdExporter = exporterRepository.save(exporter);
             return ResponseEntity.ok().body(createdExporter);
         } catch (Exception e) {
@@ -41,6 +40,7 @@ public class ExporterController {
         }
     }
 
+    //API para actualización de exportadores
     @PutMapping("/{id}")
     public ResponseEntity<Exporter> updateExporter(@PathVariable String id, @RequestBody Exporter exporterDetails) {
         return exporterRepository.findById(id)
@@ -59,7 +59,7 @@ public class ExporterController {
                     return ResponseEntity.ok().body(updatedExporter);
                 }).orElse(ResponseEntity.notFound().build());
     }
-
+    //API para actualización de exportadores
     @PutMapping("/updateStatus/{id}")
     public ResponseEntity<?> updateExporterStatus(@PathVariable String id, @RequestBody Map<String, String> statusMap) {
         String newStatus = statusMap.get("status");
@@ -74,8 +74,7 @@ public class ExporterController {
 
         return ResponseEntity.ok().build();
     }
-
-
+    //API para eliminación de exportadores
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteExporter(@PathVariable String id) {
         return exporterRepository.findById(id)

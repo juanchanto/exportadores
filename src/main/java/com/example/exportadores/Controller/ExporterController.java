@@ -3,6 +3,7 @@ package com.example.exportadores.Controller;
 import com.example.exportadores.Model.Exporter;
 import com.example.exportadores.Repository.ExporterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
@@ -28,8 +29,14 @@ public class ExporterController {
     }
 
     @PostMapping
-    public Exporter createExporter(@RequestBody Exporter exporter) {
-        return exporterRepository.save(exporter);
+    public ResponseEntity<Exporter> createExporter(@RequestBody Exporter exporter) {
+        try {
+            // Aquí puedes validar y ajustar los datos según tus necesidades
+            Exporter createdExporter = exporterRepository.save(exporter);
+            return ResponseEntity.ok().body(createdExporter);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PutMapping("/{id}")
